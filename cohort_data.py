@@ -61,7 +61,6 @@ def students_by_cohort(filename, cohort='All'):
     Return:
       - list[list]: a list of lists
     """
-    cohort_list=[]
     students = []
     for i in open(filename):
       i = i.rstrip()
@@ -125,9 +124,44 @@ def all_names_by_house(filename):
     ghosts = []
     instructors = []
 
+    rosters = []
     # TODO: replace this with your code
+    for line in open(filename):
+      line = line.rstrip()
+      line_split = line.split('|')
+      if line_split[2] == "Dumbledore's Army":
+        dumbledores_army.append(line_split[0]+" "+line_split[1])
+      elif line_split[2] == "Gryffindor":
+        gryffindor.append(line_split[0]+" "+line_split[1])
+      elif line_split[2] == "Hufflepuff":
+        hufflepuff.append(line_split[0]+" "+line_split[1])
+      elif line_split[2] == "Ravenclaw":
+        ravenclaw.append(line_split[0]+" "+line_split[1])
+      elif line_split[2] == "Slytherin":
+        slytherin.append(line_split[0]+" "+line_split[1])
+      elif line_split[4] == "G":
+        ghosts.append(line_split[0]+" "+line_split[1])
+      elif line_split[4] == "I":
+        instructors.append(line_split[0]+" "+line_split[1])
+    
+    dumbledores_army.sort()
+    # 
+    gryffindor.sort()
+    hufflepuff.sort()
+    ravenclaw.sort()
+    slytherin.sort()
+    ghosts.sort()
+    instructors.sort()
 
-    return []
+    rosters.append(dumbledores_army)
+    rosters.append(gryffindor)
+    rosters.append(hufflepuff)
+    rosters.append(ravenclaw)
+    rosters.append(slytherin)
+    rosters.append(ghosts)
+    rosters.append(instructors)
+    return rosters
+
 
 
 def all_data(filename):
