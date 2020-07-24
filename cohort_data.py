@@ -15,9 +15,21 @@ def all_houses(filename):
       - set[str]: a set of strings
     """
 
-    houses = set()
+    
 
     # TODO: replace this with your code
+
+    file = open(filename)
+    houses_list = []
+
+    for line in file:
+      line = line.rstrip()
+      line_split = line.split('|')
+      if line_split[4] != 'I' and line_split[4] != 'G' and line_split[2] != '':
+        houses_list.append(line_split[2])
+
+    houses = set(houses_list)
+    # print(houses)
 
     return houses
 
@@ -49,6 +61,14 @@ def students_by_cohort(filename, cohort='All'):
     Return:
       - list[list]: a list of lists
     """
+    cohort_list=[]
+    for i in open(filename):
+      i = i.rstrip()
+      i = i.split('|')
+      cohort_list.append(i[4])
+    print(cohort_list)
+
+    
 
     students = []
 
