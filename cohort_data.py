@@ -182,8 +182,16 @@ def all_data(filename):
     Return:
       - list[tuple]: a list of tuples
     """
-
     all_data = []
+    for line in open(filename):
+      line = line.rstrip()
+      lines = line.split('|')
+      fn , ln, house, insturctor, cohort = lines
+      name = fn + ' '+ln
+      data = (name,house, insturctor, cohort)
+      # print(data)
+      all_data.append(data)
+    
 
     # TODO: replace this with your code
 
@@ -212,6 +220,12 @@ def get_cohort_for(filename, name):
     """
 
     # TODO: replace this with your code
+
+    for line in open(filename):
+      ls = line.rstrip().split('|')
+      fn, ln, house, instructor, cohort = ls
+      if name == (fn + " " + ln):
+        return cohort
 
 
 def find_duped_last_names(filename):
