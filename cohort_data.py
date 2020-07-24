@@ -62,15 +62,24 @@ def students_by_cohort(filename, cohort='All'):
       - list[list]: a list of lists
     """
     cohort_list=[]
+    students = []
     for i in open(filename):
       i = i.rstrip()
       i = i.split('|')
-      cohort_list.append(i[4])
-    print(cohort_list)
+      # if i[4] != 'I' and i[4] != 'G':
+      #   cohort_list.append(i[4])
+      if cohort == "All" and i[4] != "I" and i[4] != 'G':
+        students.append(i[0]+' '+i[1])
+      if cohort == i[4]:
+        students.append(i[0]+' '+i[1])
+        
+        
+    # cohort = set(cohort_list)
+    # print(cohort)
 
     
 
-    students = []
+    # students = []
 
     # TODO: replace this with your code
 
