@@ -23,10 +23,14 @@ def all_houses(filename):
     houses_list = []
 
     for line in file:
-      line = line.rstrip()
-      line_split = line.split('|')
-      if line_split[4] != 'I' and line_split[4] != 'G' and line_split[2] != '':
-        houses_list.append(line_split[2])
+      line_split = line.rstrip().split('|')
+      _,_,house,_,cohort = line_split
+      if house:
+        if cohort != 'I' and cohort != 'G':
+          houses_list.append(house)
+
+        #need all_data function to run:
+        #houses_list = [house for line in file if cohort != 'I' and cohort != 'G']
 
     houses = set(houses_list)
     # print(houses)
@@ -129,20 +133,22 @@ def all_names_by_house(filename):
     for line in open(filename):
       line = line.rstrip()
       line_split = line.split('|')
-      if line_split[2] == "Dumbledore's Army":
-        dumbledores_army.append(line_split[0]+" "+line_split[1])
-      elif line_split[2] == "Gryffindor":
-        gryffindor.append(line_split[0]+" "+line_split[1])
-      elif line_split[2] == "Hufflepuff":
-        hufflepuff.append(line_split[0]+" "+line_split[1])
-      elif line_split[2] == "Ravenclaw":
-        ravenclaw.append(line_split[0]+" "+line_split[1])
-      elif line_split[2] == "Slytherin":
-        slytherin.append(line_split[0]+" "+line_split[1])
-      elif line_split[4] == "G":
-        ghosts.append(line_split[0]+" "+line_split[1])
-      elif line_split[4] == "I":
-        instructors.append(line_split[0]+" "+line_split[1])
+      fn, ln, house, instructor, cohort = line_split
+      name = fn + " " + ln
+      if house == "Dumbledore's Army":
+        dumbledores_army.append(name)
+      elif house == "Gryffindor":
+        gryffindor.append(name)
+      elif house == "Hufflepuff":
+        hufflepuff.append(name)
+      elif house == "Ravenclaw":
+        ravenclaw.append(name)
+      elif house == "Slytherin":
+        slytherin.append(name)
+      elif cohort == "G":
+        ghosts.append(name)
+      elif cohort == "I":
+        instructors.append(name)
     
     dumbledores_army.sort()
     # 
@@ -241,6 +247,19 @@ def find_duped_last_names(filename):
     Return:
       - set[str]: a set of strings
     """
+    lastname =[]
+    for line in open(filename):
+      ls = line.rstrip().split('|')
+      fn, ln, house, instructor, cohort = ls
+      lastname.append(ln)
+    dups =[]
+    for name in lastname:
+      if lastname.count(name) != 1:
+        dups.append(name)
+      
+    return set(dups)
+
+
 
     # TODO: replace this with your code
 
@@ -258,6 +277,30 @@ def get_housemates_for(filename, name):
     """
 
     # TODO: replace this with your code
+
+    housemates = set()
+    c = set()
+    h = set()
+    for tple in all_data(filename):
+      full_name, house, instructor, cohort = tple
+      if name == full_name:
+        c = cohort
+        h = house
+    # print(c)
+    # print(h)
+    for tple in all_data(filename):
+      full_name, house, instructor, cohort = tple
+      if cohort == c and house == h and full_name != name:
+        housemates.add(full_name)
+        
+
+
+    return housemates
+        
+
+
+
+    
 
 
 ##############################################################################
